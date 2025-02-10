@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: backend-deployment
   namespace: wanderlust
-  labels:
-    app: backend
 spec:
   replicas: 1
   selector:
@@ -18,9 +16,17 @@ spec:
     spec:
       containers:
         - name: backend
-          image: trainwithshubham/wanderlust-backend-beta:v2.1
-          ports:
+          image: kmvishal/wanderlust-backend-beta:v2.1
+          ports: 
             - containerPort: 8080
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
+
 ---
 apiVersion: v1
 kind: Service
@@ -32,7 +38,7 @@ spec:
   selector:
     app: backend
   ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-      nodePort: 31100
+  - port: 8080
+    targetPort: 8080
+    protocl: TCP
+    nodePort: 31100
