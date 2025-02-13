@@ -19,13 +19,27 @@ pipeline {
                 }
             }
         }
-        stage("Workspace cleanup"){
-            steps{
-                script{
-                    cleanWs()
-                }
+stage("Workspace cleanup") {
+    steps {
+        script {
+            def owaspCacheDir = "${WORKSPACE}/.dependency-check"
+            def tempCacheDir = "/tmp/dependency-check-cache"
+
+            if (fileExists(owaspCacheDir)) {
+                echo "Preserving OWASP Dependency Check Cache"
+                sh "mv ${owaspCacheDir} ${tempCacheDir}"
+            }
+
+            cleanWs()  // Clear everything else
+
+            if (fileExists(tempCacheDir)) {
+                echo "Restoring OWASP Dependency Check Cache"
+                sh "mv ${tempCacheDir} ${WORKSPACE}/.dependency-check"
             }
         }
+    }
+}
+
            stage('Git: Code Checkout') {
             steps {
                 script{
