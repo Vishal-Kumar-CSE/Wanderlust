@@ -10,10 +10,10 @@ spec:
       app: frontend
   template:
     metadata:
-      name: frontend
       labels:
         app: frontend
     spec:
+      restartPolicy: Always  # ✅ Explicit restart policy
       containers:
       - name: frontend
         image: kmvishal/wanderlust-frontend:v2.2
@@ -23,6 +23,18 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5173
+        livenessProbe:  # ✅ Optional: Ensures the container is running
+          httpGet:
+            path: /
+            port: 5173
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        readinessProbe:  # ✅ Ensures the pod is ready to serve traffic
+          httpGet:
+            path: /
+            port: 5173
+          initialDelaySeconds: 5
+          periodSeconds: 10
 
 ---
 apiVersion: v1
@@ -31,11 +43,11 @@ metadata:
   namespace: wanderlust
   name: frontend-service
 spec:
-  type: NodePort
+  type: NodePort  # ✅ Ensure this is the right choice; LoadBalancer might be better for cloud
   selector:
     app: frontend
   ports:
-  - port: 5173
+  - port: 80  # ✅ Maps external access to internal port 5173
     targetPort: 5173
     protocol: TCP
-    nodePort: 31000
+    nodePort: 31000  # ✅ Ensure this is not already in use
