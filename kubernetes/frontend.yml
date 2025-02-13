@@ -19,7 +19,7 @@ spec:
         image: kmvishal/wanderlust-frontend:v2.4
         resources:
           limits:
-            memory: "512Mi"
+            memory: "1024Mi"
             cpu: "500m"
         ports:
         - containerPort: 5173
