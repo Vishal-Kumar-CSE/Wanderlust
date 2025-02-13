@@ -24,18 +24,17 @@ spec:
         ports:
           - containerPort: 6379
         volumeMounts:
-          - name: mongo-storage
-            mountPath: /var/lib/redis/dump.rdb
-    volumes:
-      - name: mongo-storage
-        persistentVolumeClaim:
-          claimName: mongo-pvc
+          - name: redis-storage  # ✅ Changed from "mongo-storage" to "redis-storage"
+            mountPath: /data  # ✅ Standard Redis data directory
+      volumes:
+        - name: redis-storage  # ✅ Matching volume name
+          emptyDir: {}  # ✅ Temporary storage (use PVC if needed)
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-serice
+  name: redis-service  # ✅ Fixed the typo
   namespace: wanderlust
 spec:
   selector:
