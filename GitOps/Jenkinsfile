@@ -39,6 +39,7 @@ pipeline {
                 script{
                     dir('kubernetes'){
                         sh """
+                            echo "I am here"
                             sed -i -e s/wanderlust-backend.*/wanderlust-backend:${params.BACKEND_DOCKER_TAG}/g backend.yaml
                         """
                     }
