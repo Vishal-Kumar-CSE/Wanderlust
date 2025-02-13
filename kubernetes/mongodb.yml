@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mongo-deployment
+  namespace: wanderlust
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mongo
   template:
-    name: mongo
     metadata:
       labels:
         app: mongo
@@ -27,7 +27,7 @@ spec:
               mountPath: /data/db
       volumes:
         - name: mongo-storage
-          persistenetVolumeClaim:
+          persistentVolumeClaim:  # ✅ Fixed Typo
             claimName: mongo-pvc
 
 ---
@@ -39,10 +39,8 @@ metadata:
   namespace: wanderlust
 spec:
   selector:
-    app: myapp
+    app: mongo  # ✅ Fixed Selector
   ports:
-  - port: 27017
-    targetPort: 27017
-    protocol: TCP
-
-    
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
