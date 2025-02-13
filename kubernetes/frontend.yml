@@ -47,7 +47,7 @@ spec:
   selector:
     app: frontend
   ports:
-  - port: 80  # ✅ Maps external access to internal port 5173
+  - port: 5173  # ✅ Maps external access to internal port 5173
     targetPort: 5173
     protocol: TCP
     nodePort: 31000  # ✅ Ensure this is not already in use
