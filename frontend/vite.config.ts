@@ -11,7 +11,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0', // Allows access from within the Kind cluster
-    port: 5173,      // Make sure this matches your Kubernetes service
+    port: 80,      // Make sure this matches your Kubernetes service
     strictPort: true
   }
 });
