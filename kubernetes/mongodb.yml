@@ -4,7 +4,7 @@ metadata:
   name: mongo-deployment
   namespace: wanderlust
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: mongo
