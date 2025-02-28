@@ -16,7 +16,7 @@ spec:
       restartPolicy: Always  # ✅ Explicit restart policy
       containers:
       - name: frontend
-        image: kmvishal/wanderlust-frontend:v2.4
+        image: kmvishal/wanderlust-frontend:v2.7.1
         ports:
         - containerPort: 5173
         livenessProbe:  # ✅ Optional: Ensures the container is running
